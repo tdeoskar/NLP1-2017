@@ -2,11 +2,13 @@
 
 This repository holds all of the labs for NLP1. The data for these are on Blackboard in the folder `course-materials/lab-x`.
 
+Additional course-related tutorials will also be found here.
+
 ## Labs
 
-Find the labs in the folder [labs](labs). You will be notified when they become available.
+Find the labs in the folder. You will be notified when a new one becomes available.
 
-1. Getting acquainted with language data and language models
+* Lab 1. Getting acquainted with language data and language models
 
 ## Pytorch tutorial
 
