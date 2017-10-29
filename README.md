@@ -1,12 +1,12 @@
 # Natural Language Processing 1 (2017-2018)
 
-This repository holds all of the labs for NLP1. The data for these are on Blackboard in the folder `course-materials/lab-x`.
+This repository holds all of the labs for the course [NLP1](http://studiegids.uva.nl/xmlpages/page/2017-2018/zoek-vak/vak/37834) offered at the University of Amsterdam as part of the [MSc Artificial Intelligence](http://gss.uva.nl/content/masters/artificial-intelligence/study-programme/study-programme.html) and the [MSc Logic Logic](https://www.illc.uva.nl/MScLogic/) programs.
 
-Additional course-related tutorials will also be found here.
+Additional course-related notebook-tutorials will also be found here.
 
 ## Labs
 
-Find the labs in the folder. You will be notified when a new one becomes available.
+Find the labs in the folder. The data for the labs is on Blackboard in the folder `course-materials/lab-x`. You will be notified when a new one becomes available.
 
 * Lab 1. Getting acquainted with language data and language models
 
