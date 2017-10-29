@@ -1,6 +1,6 @@
 # Natural Language Processing 1 (2017-2018)
 
-This repository holds all of the labs for the course [NLP1](http://studiegids.uva.nl/xmlpages/page/2017-2018/zoek-vak/vak/37834) offered at the University of Amsterdam as part of the [MSc Artificial Intelligence](http://gss.uva.nl/content/masters/artificial-intelligence/study-programme/study-programme.html) and the [MSc Logic Logic](https://www.illc.uva.nl/MScLogic/) programs.
+This repository holds all of the labs for the course [NLP1](http://studiegids.uva.nl/xmlpages/page/2017-2018/zoek-vak/vak/37834) offered at the University of Amsterdam as part of the [MSc Artificial Intelligence](http://gss.uva.nl/content/masters/artificial-intelligence/study-programme/study-programme.html) and the [MSc Logic](https://www.illc.uva.nl/MScLogic/) programs.
 
 Additional course-related notebook-tutorials will also be found here.
 
