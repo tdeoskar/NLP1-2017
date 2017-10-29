@@ -10,7 +10,13 @@ Find the labs in the folder [labs](labs). You will be notified when they become 
 
 ## Pytorch tutorial
 
-Most of your projects will involve [PyTorch](http://pytorch.org/). We will have a tutorial on it where we introduce the key functionality of this library: `Tensor`, `Variable`, `Autograd`, and the `nn module`.
+Most of your projects will involve [PyTorch](http://pytorch.org/), so we will have a PyTorch tutorial in the *Laptopcollege*. This tutorial will focus on introducing you to the key functionality of this library: `Tensor`, `Variable`, `Autograd`, and the `nn module`.
+
+#### More
+The tutorials section of the PyTorch website is an excellent source. If you are interested in learning more about PyTorch, we especially recommend the following:
+* [Pytorch with Examples](http://pytorch.org/tutorials/beginner/pytorch_with_examples.html) for a general outlook on PyTorch
+* [Deep Learning NLP](http://pytorch.org/tutorials/beginner/deep_learning_nlp_tutorial.html) for some NLP related implementations
+* [Character RNN Classification](http://pytorch.org/tutorials/intermediate/char_rnn_classification_tutorial.html) and [Generating Names with a Character-Level RNN](http://pytorch.org/tutorials/intermediate/char_rnn_generation_tutorial.html) for a simple RNN implementation
 
 ## Required software
 
