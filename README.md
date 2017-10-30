@@ -6,7 +6,7 @@ Additional course-related notebook-tutorials will also be found here.
 
 ## Labs
 
-Find the labs in the folder. The data for the labs is on Blackboard in the folder `course-materials/lab-x`. You will be notified when a new one becomes available.
+Find the labs in the folder. The data for the labs is on **Blackboard** in the folder **course-materials**. You will be notified each time a new labs becomes available.
 
 * Lab 1. Getting acquainted with language data and language models
 
