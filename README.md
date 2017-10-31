@@ -28,7 +28,7 @@ You can also install the packages separately. We will need:
 * [Bokeh](https://bokeh.pydata.org/en/latest/)
 * [pandas](https://pandas.pydata.org/)
 
-## Projects 
+## Projects
 
 For the projects, you will need:
 
