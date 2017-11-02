@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head><meta charset="utf-8" />
-<title>lab1</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
+<title>intro_pytorch_for_nlp</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
 <style type="text/css">
@@ -11771,15 +11771,25 @@ div#notebook {
   <div tabindex="-1" id="notebook" class="border-box-sizing">
     <div class="container" id="notebook-container">
 
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Introduction-to-Pytorch-for-NLP1">Introduction to Pytorch for NLP1<a class="anchor-link" href="#Introduction-to-Pytorch-for-NLP1">&#182;</a></h1><p>This notebook is meant to give a short introduction to Pytorch basics.</p>
+<p><strong>You do not have to hand in this tutorial.</strong> It is just to help you get started with the projects.</p>
+<p>We assume that you have pytorch installed with Python 3. See <a href="http://www.pytorch.org">http://www.pytorch.org</a> for instructions on how to install it.</p>
+<p>First, let's check that we can import torch:</p>
+
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[1]:</div>
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="o">%</span><span class="k">matplotlib</span> inline
-<span class="kn">import</span> <span class="nn">matplotlib</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">torch</span>
 </pre></div>
 
 </div>
@@ -11791,80 +11801,18 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Lab-1:-Text-Corpora-and-Language-Modelling">Lab 1: Text Corpora and Language Modelling<a class="anchor-link" href="#Lab-1:-Text-Corpora-and-Language-Modelling">&#182;</a></h1><p>This lab is meant to help you get familiar with some language data, and use this data to estimate N-gram language models</p>
-<p>First you will use the <strong>Penn Treebank</strong>, which is a collection of newspaper articles from the newspaper 
-The Wall Street Journal. The idea is to examine the data and notice interesting properties. This will not take more than a few lines of code.</p>
-<p>Then you will use a corpus consisting of <strong>TedX</strong> talks. This you will use to estimate an <strong>N-gram language model</strong> for different orders of N, and use this this for some tasks.</p>
-<p>The datasets are on blackboard under course materials. Download the zip and make sure to put the files in the same directory as the notebook.</p>
-<h3 id="Rules">Rules<a class="anchor-link" href="#Rules">&#182;</a></h3><ul>
-<li><p>The lab exercises should be made in <strong>groups of two people</strong>.</p>
-</li>
-<li><p>The deadline is <strong>Tuesday 7 nov 16:59</strong>.</p>
-</li>
-<li><p>The assignment should submitted to <strong>Blackboard</strong> as <code>.ipynb</code>. Only <strong>one submission per group</strong>.</p>
-</li>
-<li><p>The <strong>filename</strong> should be <code>lab1_lastname1_lastname2.ipynb</code>, so for example <code>lab1_Jurafsky_Martin.ipynb</code>.</p>
-</li>
-<li><p>The notebook is graded on a scale of <strong>0-10</strong>. The number of points for each question is indicated in parantheses.</p>
-</li>
-<li><p>The questions marked <strong>optional</strong> are not graded; they are an additional challenge for those interested in going the extra mile.</p>
-</li>
-</ul>
-<p>Notes on implementation:</p>
-<ul>
-<li><p>You should <strong>write your code and answers in this iPython Notebook</strong> (see <a href="http://ipython.org/notebook.html">http://ipython.org/notebook.html</a> for reference material). If you have problems, please contact your teaching assistant.</p>
-</li>
-<li><p>Use only <strong>one cell for code</strong> and <strong>one cell for markdown</strong> answers!</p>
-<ul>
-<li><p>Put all code in the cell with the <code># YOUR CODE HERE</code> comment.</p>
-</li>
-<li><p>For theoretical question, put your solution in the YOUR ANSWER HERE cell.</p>
-</li>
-</ul>
-</li>
-<li><p>Test your code and <strong>make sure we can run your notebook</strong></p>
-</li>
-</ul>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="1.-Penn-treebank">1. Penn treebank<a class="anchor-link" href="#1.-Penn-treebank">&#182;</a></h1><h2 id="Exercise-1.1-(40-points,-5-points-per-subquestion-)">Exercise 1.1 (40 points, 5 points per subquestion )<a class="anchor-link" href="#Exercise-1.1-(40-points,-5-points-per-subquestion-)">&#182;</a></h2><p>You are provided with a corpus containing words with their Part-of-Speech tags (POS-tags for short). The format is
-<strong>word|POS</strong> (one sentence per line) and the file name is <strong>sec02-22.gold.tagged</strong>. This data is extracted from Sections 02-22 from the Penn Treebank: these sections are most commonly used for training statistical models like POS-taggers and parsers.</p>
-<p><strong>[Hint]</strong> <strong>Figure 10.1</strong> in chapter 10 of Jurafsky and Martin (see <a href="https://web.stanford.edu/~jurafsky/slp3/10.pdf">here</a>) holds a summary of the 45 POS-tags used in the Penn Treebank tagset together with their meaning and some examples. (If you are keen on learning more about the word-classes represented POS-tags and their definitions you can do a litle reading ahead for next week and already have a look at section 10.1 of the same chapter).</p>
-<p><strong>[Hint]</strong> the Python library <a href="https://docs.python.org/2/library/collections.html">collections</a> has an object called <code>Counter</code> which will come in handy for this exercise.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p><strong>(a)</strong> How large is the corpus? (i.e. how <strong>many tokens</strong>). And what is the size of the <strong>vocabulary</strong> used in this corpus?</p>
-<p>Estimate the vocabulary size both by <strong>lowercasing</strong> all the words as well as by leaving the words in their <strong>original orthography</strong>. What is an advantage of lowercasing all the words in your corpus? What is a notable downside? <strong>Give examples.</strong></p>
+<h3 id="Random-Seed">Random Seed<a class="anchor-link" href="#Random-Seed">&#182;</a></h3><p>We can set a seed so that we get the same random values each time we re-run the notebook.
+We will use seed <a href="https://goo.gl/S3wrAV">42</a> here.</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[2]:</div>
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">## YOUR CODE HERE ##</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">torch</span><span class="o">.</span><span class="n">manual_seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -11876,647 +11824,23 @@ The Wall Street Journal. The idea is to examine the data and notice interesting 
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>YOUR ANSWER HERE</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<hr>
-<p>For the rest of this exercise you should use the <strong>original orthography</strong> of the data when answering the questions.</p>
-<hr>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p><strong>(b)</strong> Plot a graph of word frequency versus rank of a word, in this corpus. Does this corpus obey <strong>Zipf’s law</strong>?</p>
+<h3 id="Tensors">Tensors<a class="anchor-link" href="#Tensors">&#182;</a></h3><p>Tensors are the Torch equivalent of <strong>Numpy arrays</strong>, but crucially, they can also be used on a GPU (Video card). This can make your calculations a lot faster.</p>
+<p>Since they are so similar, you can actually <strong>convert</strong> most tensors to Numpy arrays (and back), but we won't need to do that so often.</p>
+<p>Working with PyTorch, we will need lots of tensors of various shapes.
+For example, if we want to transform an input vector $\mathbf{x}$, we will need a weight matrix $W$.</p>
+<p><strong>Note:</strong> "Tensor" is a general name. A 1-D tensor is also called a <strong>vector</strong>, a 2-D tensor a <strong>matrix</strong>.</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[3]:</div>
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">## YOUR CODE HERE ##</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p><strong>(c)</strong> What are the <strong>20 most common words</strong> in the corpus and how often do they occur? What is the 50th most common word, the 100th and the 1000th and how often do they occur?</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[4]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">## YOUR CODE HERE ##</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p><strong>(d)</strong> How many different Part-of-speech tags are present in the corpus?</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[5]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">## YOUR CODE HERE ##</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p><strong>(e)</strong> Print a list of the <strong>10 most commonly occurring POS tags</strong> in the data. For each of these POS tags, what are the <strong>3 most common words</strong> that belong to that class?</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[6]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">## YOUR CODE HERE ##</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p><strong>(f)</strong> A single word may have several POS-tags. For example, <em>record</em> can be a both a <strong>noun</strong> <em>(buy a record)</em> or a <strong>verb</strong> <em>(record a lecture)</em>. This make POS-tags extremely useful for <strong>disambiguation</strong>.</p>
-<p>What percentage of the words in the vocabulary is <strong>ambiguous</strong>? (i.e. have more than one POS tag?) What are the 10 most frequent combinations of POS tags in the case of ambitguity? Which words are <strong>most ambiguous</strong>? Give some of them.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[7]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">## YOUR CODE HERE ##</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p><strong>(g)</strong>  Print some of these words with their multiple POS-tags. Do you <strong>understand the ambiguity</strong>? Use figure 10.1 mentioned above to interpret the POS-tags.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[8]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">## YOUR CODE HERE ##</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p><strong>(h)</strong> Ambiguous words do not account for a great percentage of the vocabulary. Yet they are among the most commonly occuring words of the English language. What <strong>percentage of the dataset is ambiguous</strong>?</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[9]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">## YOUR CODE HERE ##</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Exercise-1.2-(10-points,-5-per-subquestion)">Exercise 1.2 (10 points, 5 per subquestion)<a class="anchor-link" href="#Exercise-1.2-(10-points,-5-per-subquestion)">&#182;</a></h2>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>You are also provided with another file called <strong>sec00.gold.tagged</strong>. 
-Section 00 of the Penn Treebank is typically used as development data.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p><strong>(a)</strong> How many <strong>unseen words</strong> are present in the development data (i.e., words that have not occurred in the training data)?</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[10]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">## YOUR CODE HERE ##</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p><strong>(b)</strong> What are the three <strong>POS tag categories</strong> that the most <strong>unseen words</strong> belong to?</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[11]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">## YOUR CODE HERE ##</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="2.-Language-Models">2. Language Models<a class="anchor-link" href="#2.-Language-Models">&#182;</a></h1><p>This part of the lab will be covered in the Wednesday lecture. If you have prior exposure to NLP, go ahead and finish this part! If you don't, start anyway, and this part will be clear after the lecture.</p>
-<p>Reference <strong>chapter 4</strong> of J&amp;M <em>Language Modeling with N-Grams</em>.</p>
-<hr>
-<p>Models that assign <strong>probabilities</strong> to <strong>sequences of words</strong> are called language <strong>language
-modelels</strong> or <strong>LMs</strong>. The simplest model that assigns probabilities to sentences and sequences of words is the <strong>N-gram</strong> model.</p>
-<p>Recall that an <em>N</em>-gram language model uses <strong>conditional probabilities</strong> of the form</p>
-$$P(w_k \mid w_{k-N+1} \dots w_{k-1})$$<p>to <strong>approximate</strong> the full <strong>joint probability</strong></p>
-$$P(w_1 \dots w_n)$$<p>of a sequence of words $w_1 \dots w_n$.</p>
-<p>The easiest way of obtaining estimates for the probabilities $P(w_k \mid w_{k-N+1} \dots w_{k-1})$ is to use the <strong>maximum likelihood estimate</strong> or <strong>MLE</strong>, a widely used statistical estimation method (<a href="(https://en.wikipedia.org/wiki/Maximum_likelihood_estimation">read more</a>). You count and normalize:</p>
-$$P_{MLE}(w_k \mid w_{k-N+1} \dots w_{k-1}) = \frac{C(w_{k-N+1} \dots w_{k-1} w_k)}{C(w_{k-N+1} \dots w_{k-1})}.$$<h2 id="Exercise-2.1-(25-points)">Exercise 2.1 (25 points)<a class="anchor-link" href="#Exercise-2.1-(25-points)">&#182;</a></h2><p><strong>(a) </strong> Complete the function <code>train_ngram</code> so that you can train a count-based $N$-gram language model on the data found in <code>data/ted-train.txt</code> and train this for $N=2,3,4$. <strong>15 points</strong></p>
-<p><strong>(b) </strong> Extend the function above so that it accepts a parameter <code>k</code> for optional add-$k$ smoothing. <strong>10 points</strong></p>
-<p><strong>[Datastructure hint]</strong> If you store the smoothed language in a naive manner (that is, to store <em>all</em> the numbers separately) your datastructure will get huge! If $V$ is the vocabulary then the smoothed bigram model assigns probabilities to $|V|^2$ entries. If $|V|$ is around 80k, the naive way requires you to store more than 64 billion floats. Yet almost all of these are actually just $P(w_n|w_{n-1}) = \frac{k}{N + k|V|}$, with $k$ the value with which you smooth and $N=C(w_{n-1})$. Think about how you use this fact to make your model work in practice.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p><strong>[Python hint]</strong> The <code>collections</code> library has another useful datastructure: the <code>defaultdict</code>. Some example uses:</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[12]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">defaultdict</span>
-
-<span class="n">d</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
-<span class="n">d</span><span class="p">[</span><span class="s2">&quot;new key&quot;</span><span class="p">]</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-<div class="prompt output_prompt">Out[12]:</div>
-
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>0.0</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Compare that to an ordinary dictionary:</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[13]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">d</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
-<span class="n">d</span><span class="p">[</span><span class="s2">&quot;new key&quot;</span><span class="p">]</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-<div class="prompt"></div>
-
-
-<div class="output_subarea output_text output_error">
-<pre>
-<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
-<span class="ansi-red-fg">KeyError</span>                                  Traceback (most recent call last)
-<span class="ansi-green-fg">&lt;ipython-input-13-c19a7fd7bc46&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span><span class="ansi-blue-fg">()</span>
-<span class="ansi-green-intense-fg ansi-bold">      1</span> d <span class="ansi-blue-fg">=</span> dict<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
-<span class="ansi-green-fg">----&gt; 2</span><span class="ansi-red-fg"> </span>d<span class="ansi-blue-fg">[</span><span class="ansi-blue-fg">&#34;new key&#34;</span><span class="ansi-blue-fg">]</span>
-
-<span class="ansi-red-fg">KeyError</span>: &#39;new key&#39;</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Other datatypes as <code>default_factory</code>:</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[14]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">d</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
-<span class="n">d</span><span class="p">[</span><span class="s2">&quot;new key&quot;</span><span class="p">]</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-<div class="prompt output_prompt">Out[14]:</div>
-
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>0</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[15]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">d</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
-<span class="n">d</span><span class="p">[</span><span class="s2">&quot;new key&quot;</span><span class="p">]</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-<div class="prompt output_prompt">Out[15]:</div>
-
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>[]</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Converting an already existing <code>dict</code>:</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[16]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">d1</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="s2">&quot;value&quot;</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">11</span><span class="p">)}</span>
-<span class="n">d</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="n">d1</span><span class="p">)</span> <span class="c1"># convert it to a defaultdict</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="mi">5</span><span class="p">])</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="mi">100</span><span class="p">])</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-<div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>value
-0.0
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>This doesn't work:</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[17]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">d</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-<div class="prompt"></div>
-
-
-<div class="output_subarea output_text output_error">
-<pre>
-<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
-<span class="ansi-red-fg">TypeError</span>                                 Traceback (most recent call last)
-<span class="ansi-green-fg">&lt;ipython-input-17-89e9c9b71b5c&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span><span class="ansi-blue-fg">()</span>
-<span class="ansi-green-fg">----&gt; 1</span><span class="ansi-red-fg"> </span>d <span class="ansi-blue-fg">=</span> defaultdict<span class="ansi-blue-fg">(</span><span class="ansi-cyan-fg">10</span><span class="ansi-blue-fg">)</span>
-
-<span class="ansi-red-fg">TypeError</span>: first argument must be callable or None</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Use a <code>lambda</code> to make the number <code>10</code> <code>callable</code>":</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[18]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">d</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="mi">10</span><span class="p">)</span>
-<span class="n">d</span><span class="p">[</span><span class="s2">&quot;new key&quot;</span><span class="p">]</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-<div class="prompt output_prompt">Out[18]:</div>
-
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>10</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[19]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">d</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">float</span><span class="p">))</span>
-<span class="n">d</span><span class="p">[</span><span class="s2">&quot;new key&quot;</span><span class="p">]</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-<div class="prompt output_prompt">Out[19]:</div>
-
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>defaultdict(float, {})</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Clever use of a <code>defaultdict</code> can be the solution to the problem of data-storing in a smoothing $N$-gram pointed out above:</p>
-
-<pre><code>ngram = defaultdict(lambda: k/(N+kV), ngram)</code></pre>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>The following function is given:</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[22]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">train_file</span> <span class="o">=</span> <span class="s2">&quot;ted-train.txt&quot;</span>
-
-<span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">max_lines</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Reads in the data in fname and returns it as</span>
-<span class="sd">    one long list of words. Also returns a vocabulary in</span>
-<span class="sd">    the form of a word2index and index2word dictionary.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="c1"># w2i will automatically keep a counter to asign to new words</span>
-    <span class="n">w2i</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">w2i</span><span class="p">))</span>
-    <span class="n">i2w</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
-    <span class="n">start</span> <span class="o">=</span> <span class="s2">&quot;&lt;s&gt;&quot;</span>
-    <span class="n">end</span> <span class="o">=</span> <span class="s2">&quot;&lt;/s&gt;&quot;</span>
-    
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fh</span><span class="p">:</span>
-        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">fh</span><span class="p">):</span>
-            <span class="k">if</span> <span class="n">k</span> <span class="o">&gt;</span> <span class="n">max_lines</span><span class="p">:</span>
-                <span class="k">break</span>
-            <span class="n">words</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
-            <span class="c1"># assign an index to each word</span>
-            <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">words</span><span class="p">:</span>
-                <span class="n">i2w</span><span class="p">[</span><span class="n">w2i</span><span class="p">[</span><span class="n">w</span><span class="p">]]</span> <span class="o">=</span> <span class="n">w</span> <span class="c1"># trick</span>
-            
-            <span class="n">sent</span> <span class="o">=</span> <span class="p">[</span><span class="n">start</span><span class="p">]</span> <span class="o">+</span> <span class="n">words</span> <span class="o">+</span> <span class="p">[</span><span class="n">end</span><span class="p">]</span>
-            <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sent</span><span class="p">)</span>
-
-    <span class="k">return</span> <span class="n">data</span><span class="p">,</span> <span class="n">w2i</span><span class="p">,</span> <span class="n">i2w</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># create uninitialized 3-D tensor (values can be anything that is in memory!)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -12526,30 +11850,12 @@ $$P_{MLE}(w_k \mid w_{k-N+1} \dots w_{k-1}) = \frac{C(w_{k-N+1} \dots w_{k-1} w_
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[23]:</div>
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">train_ngram</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Trains an n-gram language model with optional add-k smoothing</span>
-<span class="sd">    and additionaly returns the unigram model</span>
-<span class="sd">    </span>
-<span class="sd">    :param data: text-data as returned by read</span>
-<span class="sd">    :param N: (N&gt;1) the order of the ngram e.g. N=2 gives a bigram</span>
-<span class="sd">    :param k: optional add-k smoothing</span>
-<span class="sd">    :returns: ngram and unigram</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">ngram</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="n">Counter</span><span class="p">)</span> <span class="c1"># ngram[history][word] = #(history,word)</span>
-    <span class="n">unpacked_data</span> <span class="o">=</span> <span class="p">[</span><span class="n">word</span> <span class="k">for</span> <span class="n">sent</span> <span class="ow">in</span> <span class="n">data</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">sent</span><span class="p">]</span>
-    <span class="n">unigram</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="n">Counter</span><span class="p">(</span><span class="n">unpacked_data</span><span class="p">))</span> <span class="c1"># default prob is 0.0           </span>
-
-    <span class="c1">## YOUR CODE HERE ##</span>
-    
-    <span class="k">return</span> <span class="n">ngram</span><span class="p">,</span> <span class="n">unigram</span>
-
-<span class="n">data</span><span class="p">,</span> <span class="n">w2i</span><span class="p">,</span> <span class="n">i2w</span> <span class="o">=</span> <span class="n">read</span><span class="p">(</span><span class="n">train_file</span><span class="p">)</span>
-<span class="c1"># bigram, unigram = train_ngram(data, N=2, k=0)</span>
-<span class="c1"># bigram_smoothed, unigram_smoothed = train_ngram(data, N=2, k=1)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># a randomly initialized 2-D tensor (a matrix)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -12559,49 +11865,29 @@ $$P_{MLE}(w_k \mid w_{k-N+1} \dots w_{k-1}) = \frac{C(w_{k-N+1} \dots w_{k-1} w_
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[24]:</div>
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">data</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># how to get its size</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">size</span><span class="p">())</span>
 </pre></div>
 
 </div>
 </div>
 </div>
 
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-<div class="prompt output_prompt">Out[24]:</div>
-
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>[&#39;&lt;s&gt;&#39;,
- &#39;Both&#39;,
- &#39;are&#39;,
- &#39;necessary&#39;,
- &#39;,&#39;,
- &#39;but&#39;,
- &#39;it&#39;,
- &#39;can&#39;,
- &#39;be&#39;,
- &#39;too&#39;,
- &#39;much&#39;,
- &#39;of&#39;,
- &#39;a&#39;,
- &#39;good&#39;,
- &#39;thing&#39;,
- &#39;.&#39;,
- &#39;&lt;/s&gt;&#39;]</pre>
 </div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># or if you know there are 2 dimensions:</span>
+<span class="n">time</span><span class="p">,</span> <span class="n">dim</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="n">dim</span><span class="p">)</span>
+</pre></div>
 
 </div>
-
 </div>
 </div>
 
@@ -12610,55 +11896,112 @@ $$P_{MLE}(w_k \mid w_{k-N+1} \dots w_{k-1}) = \frac{C(w_{k-N+1} \dots w_{k-1} w_
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Exercise-2.2-(5-points)">Exercise 2.2 (5 points)<a class="anchor-link" href="#Exercise-2.2-(5-points)">&#182;</a></h2><p>You can use an <em>N</em>-gram language model to <strong>generate text</strong>. The higher the order <em>N</em> the better your model will be able to catch the long-range dependecies that occur in actual sentences and the better your changes are at generating sensible text. But beware: <strong>sparsity</strong> of language data will quickly cause your model to reproduce entire lines from your training data; in such cases only one $w_k$ was observed for the histories $w_{k-N+1}\dots w_{k-1}$ in the entire training-set.</p>
-<p><strong>Complete</strong> the function <code>generate_sent</code>. It takes a language model <code>lm</code> and an order <code>N</code> and should generate a sentence by <strong>sampling</strong> from the language model.</p>
-<p><strong>[Hint]</strong> You can use the method of <a href="https://en.wikipedia.org/wiki/Inverse_transform_sampling">inverse transform sampling</a> to generate a sample from a <strong>categorical distribution</strong>, $p_1\dots p_k$ such that $p_i \geq 0$ and $\sum_{i=1}^k p_i = 1$, as follows:</p>
+<h3 id="Operations">Operations<a class="anchor-link" href="#Operations">&#182;</a></h3><h4 id="Adding">Adding<a class="anchor-link" href="#Adding">&#182;</a></h4>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># You can add tensors in many ways. </span>
+<span class="c1"># The easiest is to simply use a python + operator:</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">y</span><span class="p">)</span>
+
+<span class="c1"># But you can also use torch.add:</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">))</span>
+
+<span class="c1"># Provide an output Tensor and save the result there:</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">torch</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">out</span><span class="o">=</span><span class="n">result</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+
+<span class="c1"># Or add in-place (this changes y!)</span>
+<span class="c1"># Note: Any operation that mutates a tensor in-place is post-fixed with an &quot;_&quot;, like &quot;add_&quot; here.</span>
+<span class="n">y</span><span class="o">.</span><span class="n">add_</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Matrix-multiplication">Matrix multiplication<a class="anchor-link" href="#Matrix-multiplication">&#182;</a></h4><p>Matrix multiplications are essential for Neural networks. Quite often, we have an input vector $\mathbf{x}$, and then we want to learn weights $W$ that transform that input to some output that we want.</p>
+<p>We will now walk you through matrix multiplication in PyTorch.</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[263]:</div>
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">random</span> <span class="k">import</span> <span class="n">random</span>
-
-<span class="n">P</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.2</span><span class="p">,</span><span class="mf">0.5</span><span class="p">,</span><span class="mf">0.2</span><span class="p">,</span><span class="mf">0.1</span><span class="p">]</span>
-
-<span class="k">def</span> <span class="nf">sample</span><span class="p">(</span><span class="n">P</span><span class="p">):</span>
-    <span class="n">u</span> <span class="o">=</span> <span class="n">random</span><span class="p">()</span> <span class="c1"># uniformly random number between 0 and 1</span>
-    <span class="n">p</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">p_i</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">P</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">p</span> <span class="o">&gt;</span> <span class="n">u</span><span class="p">:</span> 
-            <span class="k">return</span> <span class="n">i</span> <span class="c1"># the first i s.t. p1 + ... + pi &gt; u</span>
-        <span class="n">p</span> <span class="o">+=</span> <span class="n">p_i</span>
-        
-<span class="nb">print</span><span class="p">(</span><span class="n">sample</span><span class="p">(</span><span class="n">P</span><span class="p">))</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="n">Counter</span><span class="p">([</span><span class="n">sample</span><span class="p">(</span><span class="n">P</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1000</span><span class="p">)]))</span> <span class="c1"># check to see if the law of large numbers is still true</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Let&#39;s create a vector x with values 0..5</span>
+<span class="c1"># We can use the arange function for that:</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 </pre></div>
 
 </div>
 </div>
 </div>
 
-<div class="output_wrapper">
-<div class="output">
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Now, we will reshape x to have shape 2x3</span>
+<span class="c1"># That is, it will become a matrix!</span>
+<span class="c1"># The values will be the same, we will just look at them differently.</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">view</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
 
-
-<div class="output_area">
-
-<div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>2
-Counter({2: 512, 1: 200, 3: 196, None: 92})
-</pre>
 </div>
 </div>
+</div>
 
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Now, let&#39;s create a square matrix W:</span>
+<span class="n">W</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">9</span><span class="p">)</span><span class="o">.</span><span class="n">view</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">W</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Now we can perform matrix multiplication, since we have 2x3 and 3x3 matrices!</span>
+<span class="c1"># Verify if you can do this multiplication by hand, too!</span>
+<span class="c1"># If you need some help, you can check here: https://www.mathsisfun.com/algebra/matrix-multiplying.html</span>
+<span class="n">h</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">W</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">h</span><span class="p">)</span>
+</pre></div>
+
+</div>
 </div>
 </div>
 
@@ -12667,38 +12010,62 @@ Counter({2: 512, 1: 200, 3: 196, None: 92})
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Inverse transform sampling in the words of Jurafsky and Martin:</p>
-<blockquote><p>Imagine all the words of the English language covering the probability space
-between 0 and 1, each word covering an interval proportional to its frequency. We
-choose a random value between 0 and 1 and print the word whose interval includes
-this chosen value.</p>
+<h4 id="More-operations">More operations<a class="anchor-link" href="#More-operations">&#182;</a></h4><p>In case you want to do something different from addition or matrix-multiplying (and that is quite likely!), you can read here about all of Torch's operations: <a href="http://pytorch.org/docs/master/torch.html">http://pytorch.org/docs/master/torch.html</a></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Indexing">Indexing<a class="anchor-link" href="#Indexing">&#182;</a></h3><p>It is quite common that we need to select a part of a tensor. Indexing works just like in Numpy!</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">])</span>    <span class="c1"># second column</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>       <span class="c1"># first row</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">[:</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">])</span>  <span class="c1"># first two rows, last column</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span> <span class="p">:])</span>  <span class="c1"># middle two rows</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Automatic-differentiation-with-Autograd">Automatic differentiation with Autograd<a class="anchor-link" href="#Automatic-differentiation-with-Autograd">&#182;</a></h2><p>One of the main reasons for using PyTorch is that we can automatically get <strong>gradients/derivatives</strong> of functions that we define. We will mainly use PyTorch for using Neural networks, and they are just fancy functions! If we use weight matrices in our function that we want to learn, then those are called the <strong>parameters</strong> or simply the <strong>weights</strong>.</p>
+<p>If our Neural Network would output a single scalar value, we would talk about taking the <strong>derivative</strong>, but you will see that quite often we will have <strong>multiple</strong> output variables ("values"); in that case we talk about <strong>gradients</strong>. It's a more general term.</p>
+<p>Given an input $\mathbf{x}$, we define our function by <strong>manipulating</strong> that input, usually by matrix-multiplications with weight matrices and additions with so-called bias vectors. As we manipulate our input, we are automatically creating a <strong>computational graph</strong>. This graph shows how to arrive at our output from our input. 
+PyTorch is a <strong>define-by-run</strong> framework; this means that we can just do our manipulations, and PyTorch will keep track of that graph for us!</p>
+<p>So, to recap: the only thing we have to do is to compute the <strong>output</strong>, and then we can ask PyTorch to automatically get the <strong>gradients</strong>.</p>
+<blockquote><p><strong>Note:  Why do we want gradients?</strong> Consider that we have defined a function, a Neural Net, that is supposed to compute a certain output $y$ for an input vector $\mathbf{x}$. We then define an <strong>error measure</strong> that tells us how wrong our network is; how bad it is in predicting output $y$ from input $\mathbf{x}$. Based on this error measure, we can use the gradients to <strong>update</strong> the weights $W$ that were responsible for the output, so that the next time we present input $\mathbf{x}$ to our network, the output will be closer to what we want.</p>
 </blockquote>
-<p>(J&amp;M, section 4.3)</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[63]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">generate_sent</span><span class="p">(</span><span class="n">lm</span><span class="p">,</span> <span class="n">N</span><span class="p">):</span>
-    <span class="c1">## YOUR CODE HERE ##</span>
-    <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+<h3 id="Variable">Variable<a class="anchor-link" href="#Variable">&#182;</a></h3><p>In order to get the autograd functionality, we will need to wrap all our Tensors in Variables. You can import the Variable class like this:</p>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">torch.autograd</span> <span class="kn">import</span> <span class="n">Variable</span>
 </pre></div>
-
-</div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="[Optional]">[Optional]<a class="anchor-link" href="#[Optional]">&#182;</a></h3><p>For how many of the histories $w_{k-N+1}\dots w_{k-1}$ is the number of continuations $w_n$ equal to <strong>one</strong>? Calculate the percentage of such cases for the different orders <em>N</em>.</p>
-<p>And which history has the <strong>most possible continuations</strong>?</p>
+<p>Converting a Tensor to a Variable is easy:</p>
+<div class="highlight"><pre><span></span><span class="c1"># example</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">Variable</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">requires_grad</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</pre></div>
+<p>You can still access the underlying Tensor using <code>.data</code>:</p>
+<div class="highlight"><pre><span></span><span class="k">print</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+</pre></div>
+<p>Let's try it out!</p>
+<h3 id="Example">Example<a class="anchor-link" href="#Example">&#182;</a></h3><p>We're going to define a function $$y_i = (x_i + 2)^2 + 3$$
+And as our final output $o$ we take the mean over all values $y_i$, so we get a single output value:</p>
+$$o = \frac{1}{|y|} \sum_i y_i$$<p>As our input $\mathbf{x}$ we'll use a vector with 3 values: $[1, 1, 1]$.</p>
 
 </div>
 </div>
@@ -12708,7 +12075,73 @@ this chosen value.</p>
 <div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">### ANSWER ###</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">torch.autograd</span> <span class="k">import</span> <span class="n">Variable</span>
+
+<span class="c1"># create an input vector x</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">Variable</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="n">requires_grad</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Now we define our function</span>
+<span class="c1"># Note that, even though x is a vector, we can still add a single value to it.</span>
+<span class="c1"># PyTorch will just add that value to each element of the vector.</span>
+<span class="n">y</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="mi">2</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">3</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># y has a grad_fn since it was created by an operation</span>
+<span class="c1"># this grad_fn will be used by PyTorch for obtaining the gradient</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">grad_fn</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Our final output o is the mean</span>
+<span class="n">o</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">o</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># now we can take the gradients by calling o.backward()</span>
+<span class="c1"># this will populate x.grad</span>
+<span class="n">o</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
 </pre></div>
 
 </div>
@@ -12720,101 +12153,162 @@ this chosen value.</p>
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Excercise-2.3-(5-points)">Excercise 2.3 (5 points)<a class="anchor-link" href="#Excercise-2.3-(5-points)">&#182;</a></h2><p>Let $V$ denote our vocabulary. Recall that for any $w$ in $V$ <code>bigram[w]</code> defines a conditional probability $p(v|w)$ over $v$ in $V$. In the case of an <strong>unsmoothed bigram</strong>, $p(v|w) = 0$ for most $v\in V$, whereas in the <strong>smoothed bigram</strong> smoothing took care that $p(v|w) \geq 0$ for <em>all</em> $v$.</p>
-<p>The function <code>plot_bigram_dist(word, bigram, smoothbigram, k=30)</code> plots shows $p(v|word)$ for the <code>k</code> words $v$. One bar shows the probabilities in <code>bigram</code> and one in <code>smoothbigram</code>.</p>
-<p><strong>(a)</strong> Use this function to plot the distribution for at least two words <code>w</code> and answer the questions</p>
+<p><code>x.grad</code> will now contain the gradient $\partial o/ \partial x$, and this will say how a change in $x$ will affect output $o$:</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">grad</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Verifying-the-gradient-by-hand">Verifying the gradient by hand<a class="anchor-link" href="#Verifying-the-gradient-by-hand">&#182;</a></h4><p>You should now see a gradient of <code>[2, 2, 2]</code>.</p>
+<p>We can verify this by hand!</p>
+<p>Our output $\mathbf{o}$ is the mean of $\mathbf{y}$:
+$$o = \frac{1}{3}\sum_i y_i$$</p>
+<p>And $\mathbf{y}$ consists of elements $y_i$:</p>
+$$y_i = (x_i+2)^2 + 3$$<p></p>
+<p>We know that $y_i = 12$, given that $x_i = 1$ (for each $i$):
+$$y_i\bigr\rvert_{x_i=1} = 12$$</p>
+<p>Therefore,
+$$\frac{\partial o}{\partial x_i} = \frac{\partial o}{\partial y_i}\frac{\partial y_i}{\partial x_i} = \underbrace{\frac{1}{3}}_{\frac{\partial o}{\partial y_i}} \underbrace{2 (x_i+2)}_{\frac{\partial y_i}{\partial x_i}} = \frac{2}{3} (x_i+2)$$</p>
+<p>hence
+$$\frac{\partial o}{\partial x_i}\bigr\rvert_{x_i=1} = \frac{2}{3} * 3 = 2$$</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="NN-module">NN module<a class="anchor-link" href="#NN-module">&#182;</a></h2><p>Now if we want to build a big Neural Net, we could specify all our parameters (weight matrices, bias vectors) using <code>Variables</code>, ask PyTorch to calculate the gradients and then adjust the parameters. But things can quickly get cumbersome if we have a lot of parameters. In PyTorch, there is a package called <code>torch.nn</code> that makes building Neural Nets more convenient.</p>
+<p>Let's define a very simple Neural Net to show you how it works. The network performs a <strong>logistic regression</strong>, i.e. it calculates:
+$$ y = \sigma( W \mathbf{x} + b )$$</p>
+<p>You have already seen how to calculate $W \mathbf{x} + b$; it's a matrix multiplication with an added bias. The function $\sigma$ might be new: it is the sigmoid function, and it is defined as:
+$$ \sigma(x) = \frac{1}{1+ \exp(-x)} $$</p>
+<p>The $\exp$ makes sure all values are positive, while the rest scales them between 0 and 1. 
+You can see the function below:</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="n">sigmoid</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">x</span><span class="p">))</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mf">10.</span><span class="p">,</span> <span class="mf">10.</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">sigmoid</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;sigmoid&#39;</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>In NLP, we are often doing <strong>classification</strong>, rather than regression (predicting a value). So, even though the name can be misleading, logistic regression is a <strong>classifier</strong>: we have two output classes 0 and 1.</p>
+<p>To get the 2 classes, we use the sigmoid function $\sigma$, so that the values coming out of our NN are between 0 and 1. You can see that in the picture above.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">torch.nn</span> <span class="k">as</span> <span class="nn">nn</span>
+<span class="kn">import</span> <span class="nn">torch.nn.functional</span> <span class="k">as</span> <span class="nn">F</span>
+
+
+<span class="k">class</span> <span class="nc">ExampleNN</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ExampleNN</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        
+        <span class="c1"># an affine operation: y = Wx + b</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">linear</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">linear</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">sigmoid</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>  <span class="c1"># output values are squashed between 0 and 1</span>
+        <span class="k">return</span> <span class="n">x</span>
+
+<span class="n">net</span> <span class="o">=</span> <span class="n">ExampleNN</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">net</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Now, this is a very simple Neural Network! Actually, it is so simple maybe we should not call it a Neural network. But let's do so anyway.</p>
+<p>This is what you should know:</p>
 <ul>
-<li>What is the effect of smoothing on the bigram distribution of frequent words? </li>
-<li>What is the effect in the case of infrequent words?</li>
-<li>Explain the difference between the two based on the raw counts of <code>w</code> </li>
+<li>when defining your Neural Net, you create a class that <em>inherits</em> from <code>nn.Module</code>. </li>
+<li>We called our Neural Net <code>ExampleNN</code>.</li>
+<li>Parameters are defined within the <code>__init__</code> method. Here we defined a single <strong>linear</strong> layer. The parameters for that layer (a weight matrix $W$ and a bias term $b$) are added <strong>automatically</strong> to our parameter list.</li>
+<li>We define our computation in the <code>forward</code> function. In this case, we apply the linear layer to our input $\mathbf{x}$ and then a sigmoid function.</li>
 </ul>
-<p><strong>(b)</strong> Now experiment with $k$ much smaller than 1 (but greater than 0!)</p>
+<p>Let's check if our parameters are indeed as we expect them to be:</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">params</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">net</span><span class="o">.</span><span class="n">parameters</span><span class="p">())</span>
+
+<span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">params</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>You can see that:</p>
 <ul>
-<li>What are the effects?</li>
+<li>the first parameter is our weight matrix $W$, which is shaped $[1, 3]$.</li>
+<li>the second parameter is the bias term $b$, which is a scalar (a single value), since the weight matrix transforms our input $\mathbf{x}$ (with 3 elements) into a single scalar.</li>
 </ul>
-<p><strong>[Hint]</strong> Remember that add-1 smoothing turns 
-$$P(w_n\mid w_{n-1}) = \frac{C(w_{n-1}w_{n})}{C(w_{n-1})}$$
-into
-$$P_{add-1}(w_n\mid w_{n-1}) = \frac{C(w_{n-1}w_{n}) + 1}{C(w_{n-1}) + |V|}.$$</p>
-<p>What happens when $C(w_{n-1})$ is relatively big (similiar in of size as $ |V| $)? And what if $C(w_{n-1})$ is small?</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[193]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>    
-
-<span class="k">def</span> <span class="nf">plot_bigram_dist</span><span class="p">(</span><span class="n">word</span><span class="p">,</span> <span class="n">bigram</span><span class="p">,</span> <span class="n">smoothbigram</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">30</span><span class="p">):</span>
-    <span class="n">d</span> <span class="o">=</span> <span class="n">bigram</span><span class="p">[</span><span class="n">word</span><span class="p">]</span>
-    <span class="n">ds</span> <span class="o">=</span> <span class="n">smoothbigram</span><span class="p">[</span><span class="n">word</span><span class="p">]</span>
-    
-    <span class="c1"># sort the probabilities</span>
-    <span class="n">d_sort</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">t</span><span class="p">:</span> <span class="n">t</span><span class="p">[</span><span class="mi">1</span><span class="p">])[</span><span class="mi">0</span><span class="p">:</span><span class="n">k</span><span class="p">]</span>
-    <span class="n">ds_sort</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">ds</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">t</span><span class="p">:</span> <span class="n">t</span><span class="p">[</span><span class="mi">1</span><span class="p">])[</span><span class="mi">0</span><span class="p">:</span><span class="n">k</span><span class="p">]</span>
-    
-    <span class="n">_</span><span class="p">,</span> <span class="n">probs</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">d_sort</span><span class="p">)</span>
-    <span class="n">smooth_ws</span><span class="p">,</span> <span class="n">smooth_probs</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">ds_sort</span><span class="p">)</span>
-    
-    <span class="c1"># make up for the fact that in the unsmoothed case  probs is generally less than k long</span>
-    <span class="n">probs</span> <span class="o">=</span> <span class="n">probs</span> <span class="o">+</span> <span class="p">(</span><span class="mi">0</span><span class="p">,)</span> <span class="o">*</span> <span class="p">(</span><span class="n">k</span><span class="o">-</span><span class="nb">len</span><span class="p">(</span><span class="n">probs</span><span class="p">))</span> 
-
-    <span class="n">w_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s2">&quot;w&quot;</span><span class="p">:</span> <span class="n">smooth_ws</span> <span class="o">*</span> <span class="mi">2</span><span class="p">,</span>
-                           <span class="s2">&quot;P(</span><span class="si">{}</span><span class="s2">|w)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">word</span><span class="p">):</span> <span class="n">probs</span> <span class="o">+</span> <span class="n">smooth_probs</span><span class="p">,</span>
-                           <span class="s2">&quot;smoothing&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;unsmoothed&quot;</span><span class="p">]</span><span class="o">*</span><span class="n">k</span> <span class="o">+</span> <span class="p">[</span><span class="s2">&quot;smoothed&quot;</span><span class="p">]</span><span class="o">*</span><span class="n">k</span><span class="p">})</span>
-    
-    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">rotation</span><span class="o">=</span><span class="mi">90</span><span class="p">)</span>
-    <span class="n">g</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">barplot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;P(</span><span class="si">{}</span><span class="s2">|w)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">word</span><span class="p">),</span> <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;smoothing&quot;</span><span class="p">,</span>
-                    <span class="n">data</span><span class="o">=</span><span class="n">w_data</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="s2">&quot;Blues_d&quot;</span><span class="p">)</span>    
-</pre></div>
-
-</div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[86]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">## YOUR CODE HERE ##</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>YOUR ANSWERS HERE</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p><strong>Recall</strong> that if we have a sentence $w_1,\dots,w_n$ we can write</p>
-$$P(w_1\dots w_n) = P(w_1)P(w_2|w_1) \cdots P(w_i|w_1 \dots w_{n-1}) \approx P(w_1)P(w_2|w_1)\cdots P(w_{N-1}|w_1\dots w_{N-2})\prod_{i=N}^{n} P(w_i|w_{i-(N-1)}\dots w_{i-1})$$<p>where in the last step we make an $N$-gram approximation of the full conditionals.</p>
-<p>For example, in the case of a bigram (N=2), the above expression reduces to</p>
-$$P(w_1 \dots w_n)\approx P(w_1)\prod_{i=2}^{n} P(w_i| w_{i-1}).$$<h2 id="Exercise-2.4-(5-points)">Exercise 2.4 (5 points)<a class="anchor-link" href="#Exercise-2.4-(5-points)">&#182;</a></h2><p>The following sentences are taken from the <strong>training data</strong>. Use your <strong>unsmoothed unigram</strong>, <strong>bigram</strong>, and <strong>trigram</strong> language model to estimate their <strong>probabilities</strong>:</p>
-
-<pre><code>1. Every day was about creating something new .
-2. In this machine , a beam of protons and anti-protons are accelerated to near the speed of light and brought 
-   together in a collision , producing a burst of pure energy .
-
-</code></pre>
-<p><strong>Repeat</strong> this with the <strong>smoothed (add-1)</strong> versions of the N-grams. What is the effect of smoothing on the probabilities?</p>
+<p>Observe that these parameters have been randomly initialized.</p>
+<p>Now that we have our NN, we can feed it an input and see what comes out.
+The input has to be a <code>Variable</code>.</p>
 
 </div>
 </div>
@@ -12824,7 +12318,10 @@ $$P(w_1 \dots w_n)\approx P(w_1)\prod_{i=2}^{n} P(w_i| w_{i-1}).$$<h2 id="Exerci
 <div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">## YOUR CODE HERE ##</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">Variable</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;input:&quot;</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+<span class="n">out</span> <span class="o">=</span> <span class="n">net</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;output:&quot;</span><span class="p">,</span> <span class="n">out</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -12836,22 +12333,14 @@ $$P(w_1 \dots w_n)\approx P(w_1)\prod_{i=2}^{n} P(w_i| w_{i-1}).$$<h2 id="Exerci
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>YOUR ANSWERS HERE</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Exercise-2.5-(5-points)">Exercise 2.5 (5 points)<a class="anchor-link" href="#Exercise-2.5-(5-points)">&#182;</a></h2><p>The above sentences were taken from the training set, hence they will all have probability greater than 0. The big challenge for our language model are of course with sentence that contain unseen N-grams: if such an N-gram occurs our model immediately assigns the sentence probability zero.</p>
-<p>The following three senteces are taken from the <strong>test set</strong> availlable in the file <strong>ted-test.txt</strong>. What probabilities do your smoothed and unsmoothed language models asign in this case?</p>
-
-<pre><code>1. Because these robots are really safe .
-2. We have sheer nothingness on one side , and we have this vision of a reality that encompasses every 
-   conceivable world at the other extreme : the fullest possible reality , nothingness , the simplest possible 
-   reality .</code></pre>
+<h4 id="Loss">Loss<a class="anchor-link" href="#Loss">&#182;</a></h4><p>Now we would like to use the <code>autograd</code> functionality to get gradients, but we first need a loss!
+The loss will tell us how well our network is doing.</p>
+<p>We're going to say that, for our input example, the <strong>target</strong> value is <code>0</code>. 
+The target is what we wanted our network to <strong>predict</strong> for the input that we gave.</p>
+<p>As our <strong>loss</strong> (or "criterion") we'll use the MSE, Mean Squared Error:</p>
+$$ \text{MSE} = \frac{1}{N} \sum_{i=1}^N (o_i - t_i)^2 $$<p>I.e. it is the average, over elements $i$, of the squared difference of output $o_i$ with target $t_i$.
+Since we have a single output value here, our loss is simply $(o - t)^2$.</p>
+<p>Let's calculate our loss:</p>
 
 </div>
 </div>
@@ -12861,7 +12350,12 @@ $$P(w_1 \dots w_n)\approx P(w_1)\prod_{i=2}^{n} P(w_i| w_{i-1}).$$<h2 id="Exerci
 <div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">### YOUR CODE HERE ###</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">out</span> <span class="o">=</span> <span class="n">net</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">target</span> <span class="o">=</span> <span class="n">Variable</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>  <span class="c1"># a dummy target (0.)</span>
+<span class="n">criterion</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">MSELoss</span><span class="p">()</span>  <span class="c1"># this is our criterion</span>
+<span class="n">loss</span> <span class="o">=</span> <span class="n">criterion</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;output:&quot;</span><span class="p">,</span> <span class="n">out</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;loss:&quot;</span><span class="p">,</span> <span class="n">loss</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -12873,41 +12367,8 @@ $$P(w_1 \dots w_n)\approx P(w_1)\prod_{i=2}^{n} P(w_i| w_{i-1}).$$<h2 id="Exerci
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>YOUR ANSWERS HERE</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="[Optional]">[Optional]<a class="anchor-link" href="#[Optional]">&#182;</a></h3><p><strong>Optional</strong> What percentage of the sentences in the test set get assigned probability 0 under your smoothed and unsmoothed language models?</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[272]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">### ANSWER HERE ###</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Exercise-2.6-(5-points)">Exercise 2.6 (5 points)<a class="anchor-link" href="#Exercise-2.6-(5-points)">&#182;</a></h2><p><strong>Perplexity</strong> is very frequently used <strong>metric</strong> for evaluating probabilistic models such as language models. The perplexity (sometimes called <strong>PP</strong> for short) of a language model on a sentence is the <strong>inverse probability</strong> of the sentence, <strong>normalized</strong> by the number of words:</p>
-$$PP(w_1 \dots w_n) = P(w_1\dots w_n)^{-\frac{1}{n}}.$$<p>Here we can again approximate $P(w_1 \dots w_n)$ with N-gram probabilities, as above.
-Note: $(x_1\cdots x_n)^{-\frac{1}{n}}$ is the <strong>geometric mean</strong> of the numbers $x_1,\dots,x_n$. It is like the (regular) artithmetic mean, but with <strong>products</strong> instead of <strong>sums</strong>. The geometric mean is a more natural choice in the case of <em>PP</em> because behind $P(w_1\dots w_n)$ is a series of $n$ products (<a href="https://en.wikipedia.org/wiki/Geometric_mean">more here</a>).</p>
-<p>Compute the perplexity of the training sentences from excercise 2.1. What big difference between the <strong>probabilities</strong> of the sentences and the <strong>perplexities</strong> of the sentences do you notice?</p>
+<p>Now we'll ask PyTorch to <strong>update</strong> the weights (parameters) of our neural network so that our next prediction is closer to that target.</p>
+<p>We first need to zero-out all gradient tensors. <code>net.zero_grad()</code> will do this for all parameters. It will set <code>p.grad</code> to zeros for each parameter $p$.</p>
 
 </div>
 </div>
@@ -12917,7 +12378,15 @@ Note: $(x_1\cdots x_n)^{-\frac{1}{n}}$ is the <strong>geometric mean</strong> of
 <div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">### YOUR CODE HERE ###</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">net</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>  <span class="c1"># reset gradients</span>
+<span class="n">loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>  <span class="c1"># compute gradients</span>
+
+<span class="c1"># update weights</span>
+<span class="n">learning_rate</span> <span class="o">=</span> <span class="mf">0.5</span>
+<span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">net</span><span class="o">.</span><span class="n">parameters</span><span class="p">():</span>
+    <span class="c1"># for each parameter, take a small step in the opposite dir of the gradient</span>
+    <span class="c1"># sub_ substracts in-place</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">sub_</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">grad</span><span class="o">.</span><span class="n">data</span> <span class="o">*</span> <span class="n">learning_rate</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -12929,39 +12398,99 @@ Note: $(x_1\cdots x_n)^{-\frac{1}{n}}$ is the <strong>geometric mean</strong> of
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>YOUR ANSWER HERE</p>
+<p>Now, if we check the output for the same input vector $\mathbf{x}$, the output should be closer to the target:</p>
 
 </div>
 </div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">new_out</span> <span class="o">=</span> <span class="n">net</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">new_loss</span> <span class="o">=</span> <span class="n">criterion</span><span class="p">(</span><span class="n">new_out</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;target:&quot;</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;out:&quot;</span><span class="p">,</span> <span class="n">out</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;new out (should be closer to target):&quot;</span><span class="p">,</span> <span class="n">new_out</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">loss:&quot;</span><span class="p">,</span> <span class="n">loss</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;new loss (should be lower):&quot;</span><span class="p">,</span> <span class="n">new_loss</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="That's-it!">That's it!<a class="anchor-link" href="#That's-it!">&#182;</a></h1><p>Congratulations, you have made it to the end of the tutorial. Here we will recap the gist of this notebook.</p>
-<p><strong>Make sure all your cells can be executed and all your answers are there. Then, read on if you're interested!</strong></p>
-<hr>
-<p>By now you should have a solid feeling for the problem of <strong>sparsity in language data</strong>; there's just never enough data. For the task of language modelling, we saw that sparsity is a serious challenge.</p>
-<p>It would be great to be able to model $p(w_n|w_1 \dots w_{n-1})$ for unlimited $n$: the larger $n$ the better our language model should become at capturing the long-range dependencies between words that characterize actual human sentences, and the more probability our model will asign to such sentences as opposed to sentences that are word-soup. But in the N-gram approach, increasing $n$ will quickly kill all generalizing abilities of the model: the model will start to asign probabilities only to sentences it has seen in the training data.</p>
-<p>So, where to go from here? Here are three directions that we could head in.</p>
-<h3 id="Smoothing">Smoothing<a class="anchor-link" href="#Smoothing">&#182;</a></h3><p>We have seen one example of smoothing in this lab: add-k smoothing. This is an easy method, both conceptually and implementation-wise. But the results are not great, and the effects it has on the distributions can be extreme.</p>
-<p>A much more sophisticated method of smoothing is so-called <strong>Kneser-Ney smoothing</strong>. The method is described in detail in section 4.5 of J&amp;M (3rd edition). This is one of the best performing N-gram smoothing methods, and up to a few years ago a popular implementation of it called <a href="https://kheafield.com/code/kenlm/">KenLM</a> gave state of the art results.</p>
-<h3 id="From-words-to-characters">From words to characters<a class="anchor-link" href="#From-words-to-characters">&#182;</a></h3><p>In this lab we have considered language modeling as the task of predicting a <strong>word</strong> $w_n$ based on a history of <strong>words</strong> $w_1\cdots w_n$. What if instead we let our basic units of modelling be <strong>characters</strong>? The task then becomes to model $p(c_k\mid c_{k-N-1}\dots c_{k-1})$ where each $c_i$ is now an ASCII character instead of an entire word.</p>
-<p>Suddenly sparsity of data is no longer a problem! The set of characters to use is tiny (&lt; 100) compared to even a small-sized vocabulary as today. Have a look at this very illustrative notebook written by Yoav Golberg to see such a method in action: <a href="http://nbviewer.jupyter.org/gist/yoavg/d76121dfde2618422139">The unreasonable effectiveness of Character-level Language Models</a>.</p>
-<p>(So what is the downside?)</p>
-<h3 id="Neural-language-models">Neural language models<a class="anchor-link" href="#Neural-language-models">&#182;</a></h3><p>The above notebook was actually written as a response to this blog post by Andrej Karpathy: <a href="http://karpathy.github.io/2015/05/21/rnn-effectiveness/">The Unreasonable Effectiveness of Recurrent Neural Networks</a>. Go ahead and read it if you haven't already: it is a superb introduction to the topic of Recurrent Neural Networks.</p>
-<p>Neural language models solve the problem of data sparsity in a different manner. Instead of estimating the probabilities $p(w_k\mid w_{k-N-1}\dots w_{k-1})$ by counting occurences in the data, they use a neural network $f_{\theta}$ parametrized by parameters $\theta$ to predict this probability. The parameters $\theta$ are learned through optimization.</p>
-<p>The simplest approach goes like this: each word in the history $w_{k-N-1}\dots w_{k-1}$ is embedded separately giving  vectors $e_{k-N-1}\dots e_{k-1}$ and then concatenated into one long vectors $[e_{k-N-1};\dots ;e_{k-1}]$. The network then uses this history vector to predict a probability distribution over words $w$ in the vocabulary $V$:</p>
-$$p(w \mid w_{k-N-1}\dots w_{k-1}) = f_{\theta}([e_{k-N-1};\dots;e_{k-1}]).$$<p>(In order to produce legitimate probabilities the final layer of such a network will be for example a $softmax$.)</p>
-<p>This provides a solution to the sparsity problem by having the network let the individual embeddings of the words in the history interact through its non-linear transforamtion. We are letting the network figure out the smoothing itself!</p>
-<p>RNNs are a clever extension of this idea, where a hidden state vector $h$ is re-used and updated at each step $k$ in order to store the information of the entire history up to step $k-1$. That is, an RNN actually does away with the N-order approximation; it tries to model the full conditional directly! That means that</p>
-$$p(w \mid w_1\dots w_{k-1}) \approx RNN_{\theta}([e_{k-1};h_{k-1}])$$<p>where the hidden state $h_{k-1}$ is a compression of the <em>entire history</em> $w_1\dots w_{k-1}$.</p>
-<p>Another great place to learn about RNNs, their problems, and solutions to those, is on the blog of <a href="http://colah.github.io/posts/2015-08-Understanding-LSTMs/">Christopher Olah</a>. The project on language modelling will involve learning more about these methods.</p>
-<hr>
-<p>(And now, it's time to read the classic essay by Eugene Wigner that gave both of the posts their title: <a href="http://www.dartmouth.edu/~matc/MathDrama/reading/Wigner.html">The Unreasonable Effectiveness of Mathematics in the Natural Sciences</a>)</p>
+<h2 id="Bag-of-Words-(BOW)-classifier">Bag of Words (BOW) classifier<a class="anchor-link" href="#Bag-of-Words-(BOW)-classifier">&#182;</a></h2><p>Congratulations, that's the basics!</p>
+<p>We will now take a look at the BOW model that we showed in the beginning. 
+Given a sentence (a sequence of tokens), we will predict the <strong>sentiment</strong> of that sentence (0 - very negative, ..., 4 - very positive).</p>
+<p>We associate a learned vector $\mathbf{w}$ (size $5$) with every token. 
+To determine the sentiment, we will add up the word vectors, also called the <strong>embeddings</strong>, of each token in the sentence. We also add a <strong>bias vector</strong>, which is also a learned vector of size 5.</p>
+<p>You can now take a look at <code>bow-simple.py</code>.  You will see that the bias vector is missing.</p>
+<h3 id="Exercises">Exercises<a class="anchor-link" href="#Exercises">&#182;</a></h3><ol>
+<li><p>Always take a look at the <strong>data</strong> first! Open <code>data/classes/test.txt</code> in your favorite editor. On Linux/OS X, use <code>less filename</code> from the Terminal to open big files without filling your memory.</p>
+</li>
+<li><p>Take a look at how the data is <em>read in</em> and how the <em>dictionaries</em> are created. Make sure you understand how this works. The dictionaries convert words to integers, and this will be very useful when we want to sum the embeddings of certain words in a sentence.</p>
+</li>
+<li><p>Find the location where the Variable is defined that holds the weights for each token. On a separate line, add another Variable that just holds the <strong>bias</strong> (a vector of size <code>ntags</code>). Like the weights, this vector should be initialized randomly.</p>
+</li>
+<li><p>Find the <code>calc_scores</code> function and make sure you understand what it does. Then, add the bias parameter to the <code>score</code>, before it is returned.</p>
+</li>
+<li><p>Make sure the bias parameter is also updated after the gradients are calculated. The bias term is updated similarly to how the weights are updated, after <code>output.backward()</code> is called.</p>
+</li>
+<li><p>Finally, don't forget to zero-out the gradient tensor of the bias parameters after updating. Again, this is similar to the code that zeros out the gradients for the weights.</p>
+</li>
+</ol>
+<p>Now, play a bit with your BOW classifier. Does it work well?</p>
+<h2 id="BOW-using-torch.nn">BOW using torch.nn<a class="anchor-link" href="#BOW-using-torch.nn">&#182;</a></h2><p>In the <code>bow-simple.py</code> code we did a lot of stuff manually; the updates for example.
+Now take a look at <code>bow-nn.py</code>. In this code we use the <code>torch.nn</code> package to use some higher-level functions.</p>
+<h3 id="Exercises">Exercises<a class="anchor-link" href="#Exercises">&#182;</a></h3><ol>
+<li><p>The bias term is missing again; please add it back. This time, you will have to define it in the <code>__init__</code> method of the BOW model. Hint: you will need to use <code>nn.Parameter</code>.</p>
+</li>
+<li><p>In the <code>forward</code> function of the model, make sure to sum the bias that you defined in the previous step.</p>
+</li>
+<li><p>Now take a look at how the weights are updated. You don't have to change this code, since the optimizer automatically finds all the model parameters (w and b). This code uses the <code>torch.optim</code> package to do the same as what we did manually before.</p>
+</li>
+</ol>
+<p>Make sure that you can run this code, and verify that it gives similar results to the manual code.</p>
+<h2 id="Continious-BOW-(CBOW)-classifier">Continious BOW (CBOW) classifier<a class="anchor-link" href="#Continious-BOW-(CBOW)-classifier">&#182;</a></h2><p>Now that you've looked at the BOW models, it is time to take a look at <code>cbow.py</code>.
+The difference with BOW is that we can now assign more parameters per token, and this allows us to capture more fine-grained aspects of the tokens. Before, we could only associate how much a token was associated with each class.
+But now we can use as many dimensions as we like. One dimension could be if the word is an adjective, or if it describes an object. We will now use a separate weight matrix to transform the sum of word representations into the number of classes that we have:
+$$o = W \mathbf{x} + b$$
+where $\mathbf{x}$ is the sum of the word embeddings.</p>
+<h3 id="Exercises">Exercises<a class="anchor-link" href="#Exercises">&#182;</a></h3><ol>
+<li><p>In the <code>__init__</code> method of the model, add a <code>nn.Linear</code> layer to transform a vector of <code>embedding_dim</code> into a vector of size <code>ntags</code>. Note that the linear layer "secretly" defines paramters $W$ and $b$ for us.</p>
+</li>
+<li><p>In the <code>forward</code> method, apply the <code>bow</code> (the sum of word embeddings) to the linear layer, like this: <code>logits = self.linear(bow)</code></p>
+</li>
+<li><p>Now take a look at the training loop. Did you notice that <code>lookup_tensor</code> takes as input a list of sentences? Why is this?</p>
+</li>
+</ol>
+<p>You can now play around with this code. You can e.g. try different learning rates, and adding more layers.</p>
+<h2 id="That's-it!">That's it!<a class="anchor-link" href="#That's-it!">&#182;</a></h2><p>We will release the solutions next week.</p>
 
 </div>
 </div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span> 
+</pre></div>
+
+</div>
+</div>
+</div>
+
 </div>
     </div>
   </div>
