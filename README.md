@@ -10,6 +10,10 @@ Find the labs in the folder. The data for the labs is on **Blackboard** in the f
 
 * Lab 1. Getting acquainted with language data and language models
 
+## Tutorial
+
+You can find the PyTorch tutorial [here](pytorch-tutorial/).
+
 ## Required software
 
 ### Easy installation
@@ -30,8 +34,4 @@ You can also install the packages separately. We will need:
 
 ## Projects
 
-For the projects, you will need:
-
-* [PyTorch](http://pytorch.org/)
-
-More info about the PyTorch tutorial will follow.
+Project information will be provided by your TA.
