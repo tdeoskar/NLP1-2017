@@ -11726,7 +11726,9 @@ body {
 div#notebook {
   overflow: visible;
   border-top: none;
-}@media print {
+}
+
+@media print {
   div.cell {
     display: block;
     page-break-inside: avoid;
@@ -11747,7 +11749,7 @@ div#notebook {
 
 <!-- Loading mathjax macro -->
 <!-- Load mathjax -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML"></script>
+    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
     <!-- MathJax configuration -->
     <script type="text/x-mathjax-config">
     MathJax.Hub.Config({
@@ -11771,7 +11773,8 @@ div#notebook {
   <div tabindex="-1" id="notebook" class="border-box-sizing">
     <div class="container" id="notebook-container">
 
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -11785,7 +11788,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="prompt input_prompt">In&nbsp;[1]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="o">%</span><span class="k">matplotlib</span> inline
@@ -11797,7 +11800,8 @@ div#notebook {
 </div>
 
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -11809,7 +11813,7 @@ We will use seed <a href="https://goo.gl/S3wrAV">42</a> here.</p>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">torch</span><span class="o">.</span><span class="n">manual_seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
@@ -11819,8 +11823,27 @@ We will use seed <a href="https://goo.gl/S3wrAV">42</a> here.</p>
 </div>
 </div>
 
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+<div class="prompt output_prompt">Out[2]:</div>
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>&lt;torch._C.Generator at 0x1070b9768&gt;</pre>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -11835,7 +11858,7 @@ For example, if we want to transform an input vector $\mathbf{x}$, we will need 
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># create uninitialized 3-D tensor (values can be anything that is in memory!)</span>
@@ -11847,10 +11870,37 @@ For example, if we want to transform an input vector $\mathbf{x}$, we will need 
 </div>
 </div>
 
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+<div class="prompt"></div>
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+(0 ,.,.) = 
+  0.0000e+00  2.0000e+00  0.0000e+00
+  2.0000e+00  7.0065e-45  0.0000e+00
+  0.0000e+00  0.0000e+00  0.0000e+00
+
+(1 ,.,.) = 
+  0.0000e+00  0.0000e+00  0.0000e+00
+  0.0000e+00  2.7604e+20  5.2392e+16
+ -3.7035e+19 -2.1600e-33  2.0005e+00
+[torch.FloatTensor of size 2x3x3]
+
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># a randomly initialized 2-D tensor (a matrix)</span>
@@ -11862,10 +11912,32 @@ For example, if we want to transform an input vector $\mathbf{x}$, we will need 
 </div>
 </div>
 
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+<div class="prompt"></div>
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+ 0.3745  0.7965  0.9507
+ 0.1834  0.7320  0.7797
+ 0.5987  0.5969  0.1560
+ 0.4458  0.1560  0.1000
+[torch.FloatTensor of size 4x3]
+
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># how to get its size</span>
@@ -11876,10 +11948,26 @@ For example, if we want to transform an input vector $\mathbf{x}$, we will need 
 </div>
 </div>
 
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+<div class="prompt"></div>
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>torch.Size([4, 3])
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># or if you know there are 2 dimensions:</span>
@@ -11891,8 +11979,25 @@ For example, if we want to transform an input vector $\mathbf{x}$, we will need 
 </div>
 </div>
 
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+<div class="prompt"></div>
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>4 3
+</pre>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -11902,7 +12007,7 @@ For example, if we want to transform an input vector $\mathbf{x}$, we will need 
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="prompt input_prompt">In&nbsp;[7]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># You can add tensors in many ways. </span>
@@ -11928,8 +12033,52 @@ For example, if we want to transform an input vector $\mathbf{x}$, we will need 
 </div>
 </div>
 
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+<div class="prompt"></div>
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+ 0.4326  1.2558  1.8169
+ 0.5171  1.3331  0.9226
+ 1.3067  1.2477  0.1766
+ 0.5022  1.1259  0.8220
+[torch.FloatTensor of size 4x3]
+
+
+ 0.4326  1.2558  1.8169
+ 0.5171  1.3331  0.9226
+ 1.3067  1.2477  0.1766
+ 0.5022  1.1259  0.8220
+[torch.FloatTensor of size 4x3]
+
+
+ 0.4326  1.2558  1.8169
+ 0.5171  1.3331  0.9226
+ 1.3067  1.2477  0.1766
+ 0.5022  1.1259  0.8220
+[torch.FloatTensor of size 4x3]
+
+
+ 0.4326  1.2558  1.8169
+ 0.5171  1.3331  0.9226
+ 1.3067  1.2477  0.1766
+ 0.5022  1.1259  0.8220
+[torch.FloatTensor of size 4x3]
+
+</pre>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -11941,7 +12090,7 @@ For example, if we want to transform an input vector $\mathbf{x}$, we will need 
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="prompt input_prompt">In&nbsp;[8]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Let&#39;s create a vector x with values 0..5</span>
@@ -11955,10 +12104,35 @@ For example, if we want to transform an input vector $\mathbf{x}$, we will need 
 </div>
 </div>
 
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+<div class="prompt"></div>
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+ 0
+ 1
+ 2
+ 3
+ 4
+ 5
+[torch.FloatTensor of size 6]
+
+torch.Size([6])
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="prompt input_prompt">In&nbsp;[9]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Now, we will reshape x to have shape 2x3</span>
@@ -11973,10 +12147,31 @@ For example, if we want to transform an input vector $\mathbf{x}$, we will need 
 </div>
 </div>
 
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+<div class="prompt"></div>
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+ 0  1  2
+ 3  4  5
+[torch.FloatTensor of size 2x3]
+
+torch.Size([2, 3])
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="prompt input_prompt">In&nbsp;[10]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Now, let&#39;s create a square matrix W:</span>
@@ -11988,10 +12183,31 @@ For example, if we want to transform an input vector $\mathbf{x}$, we will need 
 </div>
 </div>
 
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+<div class="prompt"></div>
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+ 0  1  2
+ 3  4  5
+ 6  7  8
+[torch.FloatTensor of size 3x3]
+
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="prompt input_prompt">In&nbsp;[11]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Now we can perform matrix multiplication, since we have 2x3 and 3x3 matrices!</span>
@@ -12005,8 +12221,29 @@ For example, if we want to transform an input vector $\mathbf{x}$, we will need 
 </div>
 </div>
 
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+<div class="prompt"></div>
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+ 15  18  21
+ 42  54  66
+[torch.FloatTensor of size 2x3]
+
+</pre>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -12015,7 +12252,8 @@ For example, if we want to transform an input vector $\mathbf{x}$, we will need 
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -12026,7 +12264,7 @@ For example, if we want to transform an input vector $\mathbf{x}$, we will need 
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="prompt input_prompt">In&nbsp;[12]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">])</span>    <span class="c1"># second column</span>
@@ -12039,8 +12277,47 @@ For example, if we want to transform an input vector $\mathbf{x}$, we will need 
 </div>
 </div>
 
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+<div class="prompt"></div>
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+ 1.2558
+ 1.3331
+ 1.2477
+ 1.1259
+[torch.FloatTensor of size 4]
+
+
+ 0.4326
+ 1.2558
+ 1.8169
+[torch.FloatTensor of size 3]
+
+
+ 1.8169
+ 0.9226
+[torch.FloatTensor of size 2]
+
+
+ 0.5171  1.3331  0.9226
+ 1.3067  1.2477  0.1766
+[torch.FloatTensor of size 2x3]
+
+</pre>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -12072,7 +12349,7 @@ $$o = \frac{1}{|y|} \sum_i y_i$$<p>As our input $\mathbf{x}$ we'll use a vector 
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="prompt input_prompt">In&nbsp;[13]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">torch.autograd</span> <span class="k">import</span> <span class="n">Variable</span>
@@ -12086,10 +12363,31 @@ $$o = \frac{1}{|y|} \sum_i y_i$$<p>As our input $\mathbf{x}$ we'll use a vector 
 </div>
 </div>
 
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+<div class="prompt"></div>
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Variable containing:
+ 1
+ 1
+ 1
+[torch.FloatTensor of size 3]
+
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="prompt input_prompt">In&nbsp;[14]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Now we define our function</span>
@@ -12103,10 +12401,31 @@ $$o = \frac{1}{|y|} \sum_i y_i$$<p>As our input $\mathbf{x}$ we'll use a vector 
 </div>
 </div>
 
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+<div class="prompt"></div>
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Variable containing:
+ 12
+ 12
+ 12
+[torch.FloatTensor of size 3]
+
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="prompt input_prompt">In&nbsp;[15]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># y has a grad_fn since it was created by an operation</span>
@@ -12118,10 +12437,26 @@ $$o = \frac{1}{|y|} \sum_i y_i$$<p>As our input $\mathbf{x}$ we'll use a vector 
 </div>
 </div>
 
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+<div class="prompt"></div>
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>&lt;torch.autograd.function.AddConstantBackward object at 0x10d301b88&gt;
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="prompt input_prompt">In&nbsp;[16]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Our final output o is the mean</span>
@@ -12133,10 +12468,29 @@ $$o = \frac{1}{|y|} \sum_i y_i$$<p>As our input $\mathbf{x}$ we'll use a vector 
 </div>
 </div>
 
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+<div class="prompt"></div>
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Variable containing:
+ 12
+[torch.FloatTensor of size 1]
+
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="prompt input_prompt">In&nbsp;[17]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># now we can take the gradients by calling o.backward()</span>
@@ -12149,7 +12503,8 @@ $$o = \frac{1}{|y|} \sum_i y_i$$<p>As our input $\mathbf{x}$ we'll use a vector 
 </div>
 
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -12160,7 +12515,7 @@ $$o = \frac{1}{|y|} \sum_i y_i$$<p>As our input $\mathbf{x}$ we'll use a vector 
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="prompt input_prompt">In&nbsp;[18]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">grad</span><span class="p">)</span>
@@ -12170,8 +12525,30 @@ $$o = \frac{1}{|y|} \sum_i y_i$$<p>As our input $\mathbf{x}$ we'll use a vector 
 </div>
 </div>
 
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+<div class="prompt"></div>
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Variable containing:
+ 2
+ 2
+ 2
+[torch.FloatTensor of size 3]
+
+</pre>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -12191,7 +12568,8 @@ $$\frac{\partial o}{\partial x_i}\bigr\rvert_{x_i=1} = \frac{2}{3} * 3 = 2$$</p>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -12208,7 +12586,7 @@ You can see the function below:</p>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="prompt input_prompt">In&nbsp;[19]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -12222,8 +12600,167 @@ You can see the function below:</p>
 </div>
 </div>
 
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+<div class="prompt output_prompt">Out[19]:</div>
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[&lt;matplotlib.lines.Line2D at 0x1107652e8&gt;]</pre>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+
+</div>
+
+<div class="output_area">
+<div class="prompt"></div>
+
+
+
+<div class="output_png output_subarea ">
+<img src="data:image/png;base64,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
+"
+>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -12235,7 +12772,7 @@ You can see the function below:</p>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="prompt input_prompt">In&nbsp;[20]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">torch.nn</span> <span class="k">as</span> <span class="nn">nn</span>
@@ -12263,8 +12800,27 @@ You can see the function below:</p>
 </div>
 </div>
 
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+<div class="prompt"></div>
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>ExampleNN (
+  (linear): Linear (3 -&gt; 1)
+)
+</pre>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -12283,7 +12839,7 @@ You can see the function below:</p>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="prompt input_prompt">In&nbsp;[21]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">params</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">net</span><span class="o">.</span><span class="n">parameters</span><span class="p">())</span>
@@ -12296,8 +12852,32 @@ You can see the function below:</p>
 </div>
 </div>
 
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+<div class="prompt"></div>
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Parameter containing:
+ 0.3839  0.5064 -0.3322
+[torch.FloatTensor of size 1x3]
+
+Parameter containing:
+-0.5765
+[torch.FloatTensor of size 1]
+
+</pre>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -12315,7 +12895,7 @@ The input has to be a <code>Variable</code>.</p>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="prompt input_prompt">In&nbsp;[22]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">Variable</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
@@ -12328,8 +12908,34 @@ The input has to be a <code>Variable</code>.</p>
 </div>
 </div>
 
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+<div class="prompt"></div>
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>input: Variable containing:
+ 1.2944
+ 2.8346
+ 0.5633
+[torch.FloatTensor of size 3]
+
+output: Variable containing:
+ 0.7629
+[torch.FloatTensor of size 1]
+
+</pre>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -12347,7 +12953,7 @@ Since we have a single output value here, our loss is simply $(o - t)^2$.</p>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="prompt input_prompt">In&nbsp;[23]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">out</span> <span class="o">=</span> <span class="n">net</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
@@ -12362,8 +12968,32 @@ Since we have a single output value here, our loss is simply $(o - t)^2$.</p>
 </div>
 </div>
 
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+<div class="prompt"></div>
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>output: Variable containing:
+ 0.7629
+[torch.FloatTensor of size 1]
+
+loss: Variable containing:
+ 0.5820
+[torch.FloatTensor of size 1]
+
+</pre>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -12375,7 +13005,7 @@ Since we have a single output value here, our loss is simply $(o - t)^2$.</p>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="prompt input_prompt">In&nbsp;[24]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">net</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>  <span class="c1"># reset gradients</span>
@@ -12394,7 +13024,8 @@ Since we have a single output value here, our loss is simply $(o - t)^2$.</p>
 </div>
 
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -12405,7 +13036,7 @@ Since we have a single output value here, our loss is simply $(o - t)^2$.</p>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="prompt input_prompt">In&nbsp;[25]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">new_out</span> <span class="o">=</span> <span class="n">net</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
@@ -12423,8 +13054,45 @@ Since we have a single output value here, our loss is simply $(o - t)^2$.</p>
 </div>
 </div>
 
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+<div class="prompt"></div>
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>target: Variable containing:
+ 0
+[torch.FloatTensor of size 1]
+
+out: Variable containing:
+ 0.7629
+[torch.FloatTensor of size 1]
+
+new out (should be closer to target): Variable containing:
+ 0.4127
+[torch.FloatTensor of size 1]
+
+
+loss: Variable containing:
+ 0.5820
+[torch.FloatTensor of size 1]
+
+new loss (should be lower): Variable containing:
+ 0.1703
+[torch.FloatTensor of size 1]
+
+</pre>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -12478,19 +13146,6 @@ where $\mathbf{x}$ is the sum of the word embeddings.</p>
 
 </div>
 </div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span> 
-</pre></div>
-
-</div>
-</div>
-</div>
-
 </div>
     </div>
   </div>
