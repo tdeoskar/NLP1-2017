@@ -13,9 +13,20 @@ has been changed into
 d = bigram_frequencies[history] = {w1: 120, w2: 340, w3: 7 ...} # your bigram counts for 'history'
 N = sum(d.values()) # sum of actual counts for 'history'
 d_normalized = .... # normalize d with smoothing applied to elements already in the dictionary  
-d_smoothed = defaultdict(lambda: k/(N + kV), d_normalized) # add smoothing to 'unseen' words
+d_smoothed = defaultdict(lambda N=N, k=k, V=V: k/(N + kV), d_normalized) # add smoothing to 'unseen' words
 ```
 to avoid confusing you. See [piazza](https://piazza.com/class/) for a longer explanation.
+
+Thanks to **Maico Timmerman** for the idea of doing
+```python
+defaultdict(lambda N=N, k=k, V=V: k/(N + kV), d_normalized)
+```
+instead of
+```python
+defaultdict(lambda: k/(N + kV), d_normalized)
+```
+From Piazza:
+> When setting setting new values for V, the old dictonary's lambda function will also be set to the new value, since no closure is happening. To solve this issue you have to tell the lambda function that all variables should be locally scoped. [...] We do not need to add k or V, since they are equal for all different histories. If you want to be **perfectly safe**, use:
 
 ## Error
 
