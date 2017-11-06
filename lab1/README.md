@@ -53,3 +53,8 @@ def train_ngram(data, N, k=0):
 
     return ngram, unigram
 ```
+
+## Decode error
+
+If you get a "decode error" when reading in data, then your default character encoding is probably wrong.
+You can fix this by finding the `open(.., 'r')` function in the code, and add `encoding="utf-8"` to its arguments.
