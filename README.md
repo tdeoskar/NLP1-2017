@@ -9,6 +9,7 @@ Additional course-related notebook-tutorials will also be found here.
 Find the labs in the folder. The data for the labs is on **Blackboard** in the folder **course-materials**. You will be notified each time a new lab becomes available.
 
 * Lab 1. Getting acquainted with language data and language models
+* Lab 2. Hidden markov models
 
 ## Tutorial
 
