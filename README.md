@@ -4,6 +4,10 @@ This repository holds all of the labs for the course [NLP1](http://studiegids.uv
 
 Additional course-related notebook-tutorials will also be found here.
 
+## Projects
+
+Please find the project report requirements [here](https://github.com/tdeoskar/NLP1-2017/blob/master/project-reqs.md).
+
 ## Labs
 
 Find the labs in the folder. The data for the labs is on **Blackboard** in the folder **course-materials**. You will be notified each time a new lab becomes available.
