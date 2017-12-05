@@ -15,7 +15,7 @@ Find the labs in the folder. The data for the labs is on **Blackboard** in the f
 * Lab 1. Getting acquainted with language data and language models
 * Lab 2. Hidden markov models
 * Lab 3. PCFGs and CKY parsing
-* Lab 4. Pointwise mutual information (PMI) in NLP
+* Lab 4. Pointwise mutual information (PMI)
 
 ## Tutorial
 
